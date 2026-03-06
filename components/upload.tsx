@@ -1,7 +1,7 @@
 import { CheckCircle2, ImageIcon, UploadIcon } from 'lucide-react';
 import React, { useCallback, useState } from 'react'
 import { useOutletContext } from 'react-router';
-import { PROGRESS_INTERVAL_MS, PROGRESS_STEP, REDIRECT_DELAY_MS } from '../lib/constants';
+import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE, PROGRESS_INTERVAL_MS, PROGRESS_STEP, REDIRECT_DELAY_MS } from '../lib/constants';
 
 interface UploadProps {
     onComplete: (base64: string) => void;
@@ -11,10 +11,23 @@ const Upload = ({ onComplete }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [error, setError] = useState<string | null>(null);
 
     const { isSignedIn } = useOutletContext<AuthContext>();
 
     const processFile = useCallback((selectedFile: File) => {
+        setError(null);
+
+        if (!ALLOWED_MIME_TYPES.includes(selectedFile.type as typeof ALLOWED_MIME_TYPES[number])) {
+            setError('Invalid file type. Please upload a JPG or PNG image.');
+            return;
+        }
+
+        if (selectedFile.size > MAX_FILE_SIZE) {
+            setError('File is too large. Maximum size is 50 MB.');
+            return;
+        }
+
         setFile(selectedFile);
         setProgress(0);
 
@@ -88,6 +101,7 @@ const Upload = ({ onComplete }: UploadProps) => {
                         {isSignedIn ? 'Drop your image here' : 'Please sign in to upload an image'}
                     </p>
                     <p className='help'> Maximum file size 50 MB.</p>
+                    {error && <p className='error'>{error}</p>}
                 </div>
                 </div>
             ) : (
@@ -109,7 +123,7 @@ const Upload = ({ onComplete }: UploadProps) => {
                                 </p>
                     </div>
 
-                    FILE
+                    
                 </div>
             )}
         </div>
