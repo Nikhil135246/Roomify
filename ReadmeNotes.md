@@ -42,8 +42,10 @@ It’s useful when you want child components to share or use context provided by
 # Homepage design done 
 # Upload-files branch started to , implement upload feature 
 
+# hosting-images and structure 
+![2026-03-06-22-43-46.png](./screenshots/2026-03-06-22-43-46.png)
 
-
+https://youtu.be/JiwTGGGIhDs?t=4453
 
 # Question Section 
 

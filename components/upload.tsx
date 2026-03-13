@@ -24,7 +24,7 @@ const Upload = ({ onComplete }: UploadProps) => {
         }
 
         if (selectedFile.size > MAX_FILE_SIZE) {
-            setError('File is too large. Maximum size is 50 MB.');
+            setError('File is too large. Maximum size is 10 MB.');
             return;
         }
 
@@ -100,7 +100,7 @@ const Upload = ({ onComplete }: UploadProps) => {
                     <p>
                         {isSignedIn ? 'Drop your image here' : 'Please sign in to upload an image'}
                     </p>
-                    <p className='help'> Maximum file size 50 MB.</p>
+                    <p className='help'> Maximum file size 10 MB.</p>
                     {error && <p className='error'>{error}</p>}
                 </div>
                 </div>
