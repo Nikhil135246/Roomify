@@ -40,7 +40,7 @@ export default function Home() {
       return false;
     }
 
-    setProjects((prev) => [newItem, ...prev]);
+    setProjects((prev) => [saved, ...prev]);
 
     navigate(`/visualizer/${newId}`, {
       state: {
@@ -124,7 +124,7 @@ export default function Home() {
                 <div className="card-body">
                   <div>
                     <h3>
-                      name
+                      {name}
                     </h3>
                     <div className="meta">
                       <Clock size={12} />

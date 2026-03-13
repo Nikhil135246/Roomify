@@ -33,7 +33,9 @@ export const getOrCreateHostingConfig =
       const created = await puter.hosting.create(subdomain, ".");
 
       // Return the created subdomain for future uploads
-      return { subdomain: created.subdomain };
+      const record =  { subdomain: created.subdomain };
+      await puter.kv.set(HOSTING_CONFIG_KEY, record);
+      return record;
     } catch (e) {
       // If hosting creation fails, log warning and return null
       console.warn(`could not find subdomain:${e}`);
