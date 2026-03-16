@@ -10,6 +10,13 @@ export async function fetchAsDataUrl(url: string): Promise<string> {
     );
   }
 
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.startsWith("image/")) {
+    throw new Error(
+      `Expected an image response, got: ${contentType || "unknown"}`,
+    );
+  }
+
   const blob = await response.blob();
 
   return new Promise((resolve, reject) => {
@@ -48,5 +55,5 @@ export const generate3DView = async ({ sourceImage }: Generate3DViewParams) => {
     ? rawImageUrl
     : await fetchAsDataUrl(rawImageUrl);
 
-    return { renderedImage, renderedPath: undefined };
+  return { renderedImage, renderedPath: undefined };
 };

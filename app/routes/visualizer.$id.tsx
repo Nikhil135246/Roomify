@@ -13,7 +13,7 @@ const visualizer = () => {
     initialRendered?: string | null;
     name?: string | null;
   } | null;
-  const { initialImage, initialRendered, name } = location.state || {};
+  const { initialImage, initialRendered, name } = state || {};
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(initialRendered || null);
 
@@ -41,11 +41,6 @@ const visualizer = () => {
       setIsProcessing(false);
     }
   }
-  if (!state) {
-    return <Navigate to="/" replace />;
-  }
-
-
   useEffect(() => {
     if (!initialImage || hasInitialGenerated.current) return;
     if (initialRendered) {
@@ -57,6 +52,10 @@ const visualizer = () => {
     runGeneration();
 
   }, [initialImage, initialRendered])
+
+  if (!state) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="visualizer">
@@ -74,7 +73,7 @@ const visualizer = () => {
           <div className="panel-header">
             <div className="panel-meta">
               <p>Project</p>
-              <h2>{'untitled project'}</h2>
+              <h2>{name || 'untitled project'}</h2>
               <p className="note">Created by You</p>
             </div>
 
