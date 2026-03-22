@@ -47,6 +47,16 @@ It’s useful when you want child components to share or use context provided by
 
 https://youtu.be/JiwTGGGIhDs?t=4453
 
+
+
+# 3D desing and image rendering
+
+
+
+# puter serverless worker 
+### dont forget after worker creation we also uplaoded in puter pc/desktop
+![2026-03-16-22-02-00.png](./screenshots/2026-03-16-22-02-00.png)
+setup https://youtu.be/JiwTGGGIhDs?t=7878
 # Question Section 
 
 ### Q1. type and interface difference ?
@@ -57,3 +67,4 @@ Link : https://www.youtube.com/shorts/J9r35KJMqzI?feature=share
 
 
 # do check out usefull comments easter i left in the entier code 
+  // Fetch always gives u an ResponseObject = {header,status,body,...}
