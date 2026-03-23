@@ -4,8 +4,8 @@ import Upload from "../../components/upload";
 import { ArrowUpRight, ArrowRight, Clock, Layers } from "lucide-react";
 import Button from "../../components/ui/Button";
 import { useNavigate } from "react-router";
-import { useRef, useState } from "react";
-import { createProject } from "../../lib/puter.action";
+import { useEffect, useRef, useState } from "react";
+import { createProject, getProjects } from "../../lib/puter.action";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -25,7 +25,7 @@ export default function Home() {
   const handleUploadComplete = async (base64Data: string) => {
 
     try {
-      if (!isCreatingProjectRef.current) {
+      if (isCreatingProjectRef.current) {
         return false;
       }
       isCreatingProjectRef.current = true;
@@ -66,6 +66,16 @@ export default function Home() {
 
    
   }
+
+  useEffect (() =>{
+    const fetchProjects = async () => {
+      console.log("Fetching projects...");
+      const items = await getProjects();
+      console.log("Fetched projects:", items);
+      setProjects(items);
+    }
+    fetchProjects();
+  }, []);
 
 
   return (
@@ -123,7 +133,7 @@ export default function Home() {
           <div className="projects-grid">
             {projects.map(({ id, name, sourceImage, renderedImage, timestamp }) => (
 
-              <div key={id} className="project-card group">
+              <div key={id} className="project-card group" onClick={()=>  navigate(`/visualizer/${id}`, )}>
 
                 <div className="preview">
                   <img src={renderedImage || sourceImage} alt="project" />
@@ -142,7 +152,7 @@ export default function Home() {
                     <div className="meta">
                       <Clock size={12} />
                       <span>
-                        {new Date(timestamp).toLocaleDateString()}
+                        {new Date(timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </span>
                       <span>By Nikhil</span>
                     </div>
