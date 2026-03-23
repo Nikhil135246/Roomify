@@ -4,5 +4,23 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  plugins: [
+    {
+      name: "ignore-well-known",
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          const pathname = req.url?.split("?")[0]?.split("#")[0];
+          if (pathname === "/.well-known" || pathname?.startsWith("/.well-known/")) {
+            res.statusCode = 404;
+            res.end();
+            return;
+          }
+          next();
+        });
+      },
+    },
+    tailwindcss(),
+    reactRouter(),
+    tsconfigPaths(),
+  ],
 });
