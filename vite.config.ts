@@ -9,7 +9,8 @@ export default defineConfig({
       name: "ignore-well-known",
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url?.startsWith("/.well-known")) {
+          const pathname = req.url?.split("?")[0]?.split("#")[0];
+          if (pathname === "/.well-known" || pathname?.startsWith("/.well-known/")) {
             res.statusCode = 404;
             res.end();
             return;

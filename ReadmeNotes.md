@@ -49,12 +49,12 @@ https://youtu.be/JiwTGGGIhDs?t=4453
 
 
 
-# 3D desing and image rendering
+### 3D design and image rendering
 
 
 
-# puter serverless worker 
-### dont forget after worker creation we also uplaoded in puter pc/desktop
+### Puter serverless worker
+#### Don't forget after worker creation we also uploaded in Puter PC/desktop
 ![2026-03-16-22-02-00.png](./screenshots/2026-03-16-22-02-00.png)
 setup https://youtu.be/JiwTGGGIhDs?t=7878
 # Question Section 

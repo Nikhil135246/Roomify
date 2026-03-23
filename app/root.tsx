@@ -9,7 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentUser, signIn as puterSignIn, signOut as puterSignOut } from "../lib/puter.action";
 
 export const links: Route.LinksFunction = () => [
@@ -27,14 +27,14 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head suppressHydrationWarning>
+    <html lang="en">
+      <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body suppressHydrationWarning>
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />

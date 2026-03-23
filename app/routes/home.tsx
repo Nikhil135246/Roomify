@@ -50,15 +50,7 @@ export default function Home() {
 
       setProjects((prev) => [saved, ...prev]);
 
-      navigate(`/visualizer/${newId}`, {
-        state: {
-          initialImage: saved.sourceImage,
-          initialRendered: saved.renderedImage || null,
-          name,
-          base64Data
-        },
-
-      });
+      navigate(`/visualizer/${newId}`);
       return true;
     }finally {
       isCreatingProjectRef.current = false;
@@ -69,9 +61,7 @@ export default function Home() {
 
   useEffect (() =>{
     const fetchProjects = async () => {
-      console.log("Fetching projects...");
       const items = await getProjects();
-      console.log("Fetched projects:", items);
       setProjects(items);
     }
     fetchProjects();
@@ -133,10 +123,15 @@ export default function Home() {
           <div className="projects-grid">
             {projects.map(({ id, name, sourceImage, renderedImage, timestamp }) => (
 
-              <div key={id} className="project-card group" onClick={()=>  navigate(`/visualizer/${id}`, )}>
-
+              <button
+                type="button"
+                key={id}
+                className="project-card group"
+                onClick={() => navigate(`/visualizer/${id}`)}
+                aria-label={`Open project: ${name}`}
+              >
                 <div className="preview">
-                  <img src={renderedImage || sourceImage} alt="project" />
+                  <img src={renderedImage || sourceImage} alt="" />
 
                   <div className="badge">
                     <span>
@@ -161,7 +156,7 @@ export default function Home() {
                     <ArrowUpRight size={18} />
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 

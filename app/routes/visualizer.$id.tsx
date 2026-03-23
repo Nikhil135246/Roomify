@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useOutletContext, useParams } from 'react-router';
+import { useNavigate, useOutletContext, useParams } from 'react-router';
 import { generate3DView } from '../../lib/ai.action';
 import { Box, Download, RefreshCcw, Share2, X } from 'lucide-react';
 import Button from '../../components/ui/Button';
@@ -13,6 +13,8 @@ const visualizer = () => {
 
 
   const [project, setProject] = useState<DesignItem | null>(null);
+
+  const [notFound, setNotFound] = useState(false);
 
   const [isProjectLoading, setIsProjectLoading] = useState(true);
 
@@ -82,8 +84,14 @@ const visualizer = () => {
 
       if (!isMounted) return;
 
+      if (!fetchedProject) {
+        setNotFound(true);
+        setIsProjectLoading(false);
+        return;
+      }
+
       setProject(fetchedProject);
-      setCurrentImage(fetchedProject?.renderedImage || null);
+      setCurrentImage(fetchedProject.renderedImage || null);
       setIsProjectLoading(false);
       hasInitialGenerated.current = false;
     };
@@ -113,6 +121,28 @@ const visualizer = () => {
     void runGeneration(project);
   }, [project, isProjectLoading]);
 
+  if (notFound) {
+    return (
+      <div className="visualizer">
+        <nav className="topbar">
+          <div className="brand">
+            <Box className="logo" />
+            <span className="name">Roomify</span>
+          </div>
+          <Button variant="ghost" size="sm" onClick={handleBack} className="exit">
+            <X className="icon" /> Exit Editor
+          </Button>
+        </nav>
+        <section className="content">
+          <div className="panel">
+            <h2>Project not found</h2>
+            <p>The project you're looking for doesn't exist or has been deleted.</p>
+            <Button onClick={handleBack}>Back to Home</Button>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="visualizer">
@@ -130,7 +160,7 @@ const visualizer = () => {
           <div className="panel-header">
             <div className="panel-meta">
               <p>Project</p>
-              <h2>{project?.name || `Ressidencee ${id}`}</h2>
+              <h2>{project?.name || `Residence ${id}`}</h2>
               <p className="note">Created by You</p>
             </div>
 
